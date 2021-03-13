@@ -1,0 +1,63 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.signup-img{
+    height: 100vh;
+}
+body {
+    overflow-x: hidden;
+    // overflow-y: hidden;
+    // background-color: rgb(151, 221, 80);
+}
+.bg-green{
+    background-color: rgb(151, 221, 80);
+}
+.txt-white{
+    color: white;
+}
+
+@media only screen and (max-width:768px)
+{
+.d-res-none{
+    display: none;
+}
+.bg-green
+{
+    height: 100vh;
+}
+}
+
+.w-100
+{
+width: 100%;
+}
+
+.btn1{
+    height: 50px;
+    width: 100%;
+    background-color: green;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+    border: none;
+    outline: none;
+}
+
+.btn1:hover{
+    background-color:rgb(64, 209, 64);
+    color: white;
+    border: none;
+    outline: none;
+}
+
+a {
+    color: green;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+        color: green;
+}

@@ -1,27 +1,33 @@
 const express = require('express');
 const router = express.Router();
 const userCollectionSchema = require('./Schema');
-
-router.get('/users', (req, res) => {
-
-})
+const bcrypt = require("bcrypt");
 
 router.post('/register', async (req, res) => {
-    console.log(req.body);
     try {
         const user = userCollectionSchema(req.body);
-        const result = await user.save();
-        res.status(201).send(result);
+        await user.save();
+        res.status(201).send("User registered successfully");
     } catch (err) {
         res.status(400).send(err)
     }
 })
 
-router.get('/getusers', async (req, res) => {
+router.post('/login', async (req, res) => {
+    console.log(req);
+    let token;
     try {
-        const user = userCollectionSchema();
-        const result = await user.find()
-        res.status(201).send(result);
+        const username = req.body.username;
+        const password = req.body.password;
+        const result = await userCollectionSchema.findOne({ email: username });
+
+        if (result && await bcrypt.compare(password, result.password)) {
+            token = await userCollectionSchema.generateAuthToken();
+            console.log("token", token)
+            res.status(200).send(result);
+        } else {
+            res.status(404).send("Invalid credentials");
+        }
     } catch (err) {
         res.status(400).send(err)
     }

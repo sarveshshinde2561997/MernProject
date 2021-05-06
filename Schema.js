@@ -1,13 +1,36 @@
-const express = require('express');
-
+const bcrypt = require('bcrypt')
 const mongoose = require('mongoose');
-
+const jwt = require('jsonwebtoken');
 const schema = mongoose.Schema({
     name: String,
     mobile: Number,
     email: String,
-    password: String
+    password: String,
+    tokens: [
+        {
+            token: String
+        }
+    ]
 })
+
+schema.pre('save', async function (next) {
+    if (this.isModified("password")) {
+        this.password = await bcrypt.hash(this.password, 12);
+    }
+    next();
+})
+
+schema.methods.generateAuthToken = async function () {
+    try {
+        let jsonToken = jwt.sign({ _id: this._id }, process.env.SECRET_KEY);
+        this.tokens = this.tokens.concat({ token: jsonToken });
+        await this.save();
+        return jsonToken
+    }
+    catch (err) {
+        console.err(err);
+    }
+}
 
 const collection = mongoose.model('merncollection', schema)
 

@@ -22,8 +22,8 @@ router.post('/login', async (req, res) => {
         const result = await userCollectionSchema.findOne({ email: username });
 
         if (result && await bcrypt.compare(password, result.password)) {
-            token = await userCollectionSchema.generateAuthToken();
-            console.log("token", token)
+            // token = await userCollectionSchema.generateAuthToken();
+            // console.log("token", token)
             res.status(200).send(result);
         } else {
             res.status(404).send("Invalid credentials");

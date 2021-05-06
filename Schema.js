@@ -20,6 +20,16 @@ schema.pre('save', async function (next) {
     next();
 })
 
+schema.methods.generateAuthToken = async function () {
+    try {
+        let token = jwt.sign({ email: this.email, _id: this._id }, "Test");
+        this.tokens = this.tokens.concat({ token: token });
+        await this.save();
+        return token;
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 const collection = mongoose.model('merncollection', schema)
 

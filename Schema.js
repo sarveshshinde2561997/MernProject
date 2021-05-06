@@ -22,13 +22,12 @@ schema.pre('save', async function (next) {
 
 schema.methods.generateAuthToken = async function () {
     try {
-        let jsonToken = jwt.sign({ _id: this._id }, process.env.SECRET_KEY);
-        this.tokens = this.tokens.concat({ token: jsonToken });
+        let token = jwt.sign({ _id: this._id }, process.env.SECRET_KEY);
+        this.tokens = this.tokens.concat({ token: token });
         await this.save();
-        return jsonToken
-    }
-    catch (err) {
-        console.err(err);
+        return token;
+    } catch (err) {
+        console.log(err);
     }
 }
 

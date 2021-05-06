@@ -14,7 +14,7 @@ export function Signup() {
             password: document.getElementById('password').value
         }
 
-        axios.post('http://localhost:8000/register', obj).then(
+        axios.post('https://sarvtechmern.herokuapp.com/register', obj).then(
             (res) => {
                 console.log(res)
             }

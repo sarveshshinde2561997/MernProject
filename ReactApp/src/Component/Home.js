@@ -1,9 +1,9 @@
 import React from 'react'
-
-export function Home() {
+import Nvabar from "../Component/Nvabar";
+export default function Home() {
     return (
         <div>
-            Home
+            <Nvabar></Nvabar>
         </div>
     )
 }

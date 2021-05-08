@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userCollectionSchema = require('./Schema');
 const bcrypt = require("bcrypt");
-
+const jwt = require("jsonwebtoken");
 router.post('/register', async (req, res) => {
     try {
         const user = userCollectionSchema(req.body);
@@ -22,9 +22,13 @@ router.post('/login', async (req, res) => {
         const result = await userCollectionSchema.findOne({ email: username });
 
         if (result && await bcrypt.compare(password, result.password)) {
-            token = await userCollectionSchema.generateAuthToken();
             // console.log("token", token)
-            res.status(200).send(result);
+            token = jwt.sign({ _id: result._id }, "Test");
+            res.cookie("jwtToken", token, {
+                expires: new Date(Date.now() + 25892000000),
+                httpOnly: true
+            })
+            res.status(200).send({ result, token });
         } else {
             res.status(404).send("Invalid credentials");
         }

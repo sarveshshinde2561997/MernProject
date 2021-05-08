@@ -24,9 +24,10 @@ router.post('/login', async (req, res) => {
         if (result && await bcrypt.compare(password, result.password)) {
             // console.log("token", token)
             token = jwt.sign({ _id: result._id }, "Test");
-            res.cookie("jwtToken", token, {
+            res.cookie("jwttoken", token, {
                 expires: new Date(Date.now() + 25892000000),
-                httpOnly: true
+                // httpOnly: true,
+                // secure: true
             })
             res.status(200).send({ result, token });
         } else {

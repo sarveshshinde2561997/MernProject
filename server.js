@@ -10,6 +10,7 @@ app.use(cors())
 app.use(router);
 
 app.get('/', (req, res) => {
+    res.cookie("Test", "Test")
     res.send("express")
 })
 

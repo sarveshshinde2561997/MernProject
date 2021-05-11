@@ -10,6 +10,11 @@ const schema = mongoose.Schema({
         {
             token: String
         }
+    ],
+    messages: [
+        {
+            message: String
+        }
     ]
 })
 

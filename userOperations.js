@@ -46,6 +46,24 @@ router.get('/about', authenticate, (req, res) => {
     }
 })
 
+router.post('/save/message', async (req, res) => {
+    try {
+        const id = req.body._id;
+        const message = req.body.message;
+        console.log(message)
+        const result = await userCollectionSchema.findOneAndUpdate({ _id: id }, {
+            "$push": {
+                "messages": { "message": message },
+            }
+        },
+            { "new": true });
+        res.status(200).send({ result });
+    }
+    catch (err) {
+        res.status(400).send(err)
+    }
+})
+
 
 
 module.exports = router;

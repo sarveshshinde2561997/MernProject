@@ -3,6 +3,7 @@ const router = express.Router();
 const userCollectionSchema = require('./Schema');
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const authenticate = require('./Authenticate');
 router.post('/register', async (req, res) => {
     try {
         const user = userCollectionSchema(req.body);
@@ -22,19 +23,26 @@ router.post('/login', async (req, res) => {
         const result = await userCollectionSchema.findOne({ email: username });
 
         if (result && await bcrypt.compare(password, result.password)) {
-            // console.log("token", token)
-            token = jwt.sign({ _id: result._id }, "Test");
+            token = await result.generateAuthToken();
             res.cookie("jwttoken", token, {
-                expires: new Date(Date.now() + 25892000000),
-                // httpOnly: true,
-                // secure: true
-            })
-            res.status(200).send({ result, token });
+                expires: new Date(Date.now() + 1000),
+                httpOnly: true
+            });
+            res.status(200).send({ result });
         } else {
             res.status(404).send("Invalid credentials");
         }
     } catch (err) {
         res.status(400).send(err)
+    }
+})
+
+
+router.get('/about', authenticate, (req, res) => {
+    try {
+        res.status(200).send(req.rootUser)
+    } catch (err) {
+        console.log(err);
     }
 })
 

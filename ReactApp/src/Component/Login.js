@@ -12,13 +12,10 @@ export function Login() {
             username: username,
             password: password
         }
-        axios.post('http://localhost:8000/login', obj).then(
-            (res) => {
-                console.log(res)
-                history.push("/home")
-            }
-        ).catch((err) => {
-            console.error(err);
+        axios.post("http://localhost:8000/login", obj).then(() => {
+            history.push('/home')
+        }).catch((err) => {
+            console.log(err);
         })
     }
     const imgUrl = "https://static.wixstatic.com/media/8cb055_1a9746aff5f3484499318c22de1bccc9~mv2_d_7952_4472_s_4_2.jpg/v1/fill/w_640,h_846,al_b,q_85,usm_0.66_1.00_0.01/8cb055_1a9746aff5f3484499318c22de1bccc9~mv2_d_7952_4472_s_4_2.webp";

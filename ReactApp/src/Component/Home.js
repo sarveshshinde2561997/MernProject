@@ -3,7 +3,7 @@ import Nvabar from "../Component/Nvabar";
 export default function Home() {
     return (
         <div>
-            <Nvabar></Nvabar>
+            Home
         </div>
     )
 }

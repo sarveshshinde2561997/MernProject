@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Navbar, Nav, NavDropdown, FormControl, Form, Button } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import About from "../Component/About";
-import Home from "../Component/Home";
+import Home from '../Component/Home';
 import Contact from "../Component/Contact";
 import { Switch, Route, Link } from "react-router-dom";
 export default function Nvabar() {
+
+    useEffect(() => {
+
+    })
+
     return (
         <div>
             <Navbar bg="light" expand="lg">
@@ -14,7 +19,7 @@ export default function Nvabar() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="mr-auto">
                         <div className="mr-3"><Link to="/home">Home</Link></div>
-                        <div className="mr-3"><Link to="/home/about">About</Link></div>
+                        <div className="mr-3"><Link to="/about">About</Link></div>
                         <div className="mr-3"><Link to="/contact">Contact</Link></div>
                     </Nav>
                     <Form inline>
@@ -23,10 +28,9 @@ export default function Nvabar() {
                     </Form>
                 </Navbar.Collapse>
             </Navbar>
-            <Switch>
-                {/* <Route exact path='/home/about' component={About}></Route> */}
-                <Route exact path='/home/contact' component={Contact}></Route>
-            </Switch>
+            <Route exact path='/home' component={Home}></Route>
+            <Route exact path='/about' component={About}></Route>
+            <Route exact path='/contact' component={Contact}></Route>
         </div>
     )
 }

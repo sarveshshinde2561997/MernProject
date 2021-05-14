@@ -4,11 +4,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import About from "../Component/About";
 import Home from '../Component/Home';
 import Contact from "../Component/Contact";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link, useHistory } from "react-router-dom";
 export default function Nvabar() {
 
-    useEffect(() => {
+    const history = useHistory();
 
+    useEffect(() => {
+        if (!document.cookie) {
+            history.push("/login")
+        }
     })
 
     return (

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react'
 import { Link, useHistory } from "react-router-dom";
 
@@ -6,21 +7,34 @@ export function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    useState(() => {
+        if (localStorage.getItem('token')) {
+            history.push('/dashboard');
+        }
+    }, [])
+
     const Login = async () => {
         const obj = {
             username: username,
             password: password
         }
-        const headers = {
-            "Content-Type": "application/json"
-        };
-        const res = await fetch('http://localhost:8000/login', {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify(obj)
-        })
+        // const headers = {
+        //     "Content-Type": "application/json"
+        // };
+        // const res = await fetch('http://localhost:8000/chatroom/login', {
+        //     method: "POST",
+        //     headers: headers,
+        //     body: JSON.stringify(obj)
+        // })
 
-        const data = res.json();
+        axios.post("http://localhost:8000/chatroom/login", obj).then((res) => {
+            const data = res.data;
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("userInfo", JSON.stringify(data.result));
+            history.push('/dashboard')
+        }).catch((err) => {
+            console.log(err);
+        });
     }
     const imgUrl = "https://static.wixstatic.com/media/8cb055_1a9746aff5f3484499318c22de1bccc9~mv2_d_7952_4472_s_4_2.jpg/v1/fill/w_640,h_846,al_b,q_85,usm_0.66_1.00_0.01/8cb055_1a9746aff5f3484499318c22de1bccc9~mv2_d_7952_4472_s_4_2.webp";
 

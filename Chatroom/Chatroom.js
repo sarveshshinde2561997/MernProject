@@ -1,13 +1,18 @@
 const mongoose = require('mongoose');
-const jwt = require("jsonwebtoken");
 
 const chatRoomSchema = new mongoose.Schema({
 
-    name: {
-        type: String,
-        required: true
+    chatrooms: {
+        type: [
+            {
+                userId: String,
+                sendAcceptFlag: Boolean
+            }
+        ]
     }
-});
+},
+    { timestamps: true }
+);
 
 const chatRoomCollection = mongoose.model('Chatroom', chatRoomSchema)
 
